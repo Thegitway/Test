@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-salamo
-=======
-bonjour tout le monde
->>>>>>> 39e2d1ecdf83e706d178caa569347142f78d498a
