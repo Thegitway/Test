@@ -8,11 +8,3 @@ export const Border = styled.div`
   width: 10vw;
   height: 10vw;
 `;
-
-export const Svg = styled.svg`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: 100px;
-`

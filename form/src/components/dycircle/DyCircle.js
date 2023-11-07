@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { Text, Border, Svg } from "./style";
+import React, { Fragment } from "react";
+import { Svg } from "./style";
 
 function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
   var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
@@ -31,18 +31,35 @@ function describeArc(x, y, radius, startAngle, endAngle) {
 
   return d;
 }
-export default function Timer() {
-
+export default function DyCircle(props) {
   return (
-    <Fragment>
-      <Svg>
+    <div
+      style={{
+        width: "100px",
+        height: "100px",
+        ...props.style,
+      }}
+    >
+      <svg style={{ width: "100px", height: "100px" }}>
         <path
           fill="none"
           stroke="#333"
-          stroke-width="4"
-          d={describeArc(50, 50, 48, 0, 30)}
+          strokeWidth="4"
+          d={describeArc(50, 50, 48, 0, props.radius)}
         />
-      </Svg>
-    </Fragment>
+      </svg>
+      <div
+        style={{
+          marginTop: "-100%",
+          width: "100px",
+          height: "100px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {props.children}
+      </div>
+    </div>
   );
 }
