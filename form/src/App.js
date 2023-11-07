@@ -1,16 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Switcher from "./components/switcher/index";
+import Timer from "../src/components/timer/index";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Switcher />
-        <li>élément 1</li>
-        <li>élément 2</li>
-      </header>
-    </div>
+      <Timer>12</Timer>
+   
   );
 }
 
