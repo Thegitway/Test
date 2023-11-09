@@ -1,78 +1,52 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import DyCircle from "./components/dycircle/DyCircle";
-
+import Timer from "./components/timer/timer";
+const _ = require("lodash");
 function App() {
-  function toPerct(val, from, to) {
-    return (val * to) / from;
-  }
-  const [seconde, setSeconde] = useState(new Date().getSeconds());
-  const [minute, setMinute] = useState(new Date().getMinutes());
-  const [hour, setHour] = useState(new Date().getHours());
-
-  const [radiusSeconde, setRadiusSeconde] = useState(toPerct(seconde, 60, 360));
-  const [radiusMinutes, setRadiusMinutes] = useState(toPerct(minute, 60, 360));
-  const [radiusHour, setRadiusHour] = useState(toPerct(hour, 24, 360));
+  const WIDTH = 268;
+  const [survey, setSurvey] = useState({});
+  const [isLoading, setLoading] = useState(false);
+  const [w, setW] = useState(WIDTH);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRadiusMinutes(toPerct(new Date().getMinutes(), 60, 360));
-      setRadiusSeconde(toPerct(new Date().getSeconds(), 60, 360));
-      setRadiusHour(toPerct(new Date().getHours(), 24, 360));
+    async function fetchdata() {
+      setLoading(true);
+      const response = await fetch("http://localhost:8000/survey");
+      const data = await response.json();
+      setSurvey(_.get(data, "surveyData"));
+      setLoading(false);
+    }
 
-      setSeconde(new Date().getSeconds());
-      setMinute(new Date().getMinutes());
-      setHour(new Date().getHours());
-    }, 1000);
-    return () => clearInterval(interval);
+    fetchdata();
   }, []);
 
   return (
     <div
       style={{
+        width: "100%",
+        height: "50vh",
         display: "flex",
-        justifyContent: "space-around",
-        margin: "200px",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <DyCircle radius={radiusHour}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {hour} <div>Hour</div>
-        </div>
-      </DyCircle>
-      <DyCircle radius={radiusMinutes}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {minute} <div>minute</div>
-        </div>
-      </DyCircle>
-      <DyCircle radius={radiusSeconde}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {seconde} <div>seconde</div>
-        </div>
-      </DyCircle>
+      <input
+        value={w}
+        style={{ width: "100px" }}
+        type="number"
+        onChange={(e) => setW(e.target.value)}
+      ></input>
+      <Timer width={w || WIDTH}></Timer>
+      {isLoading === true ? (
+        <div>Loading</div>
+      ) : (
+        <ul>
+          {_.map(Object.keys(survey), (s, i) => {
+            return <li key={`${i}`}>{survey[s]}</li>;
+          })}
+        </ul>
+      )}
     </div>
   );
 }
-
 export default App;
