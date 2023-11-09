@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Timer from "./components/timer/timer";
+
+export function sum(a, b) {
+  return a + b;
+}
 const _ = require("lodash");
-function App() {
+
+export function App() {
   const WIDTH = 268;
   const [survey, setSurvey] = useState({});
   const [isLoading, setLoading] = useState(false);
@@ -30,7 +35,9 @@ function App() {
         justifyContent: "space-between",
       }}
     >
+      <label>{sum(10, 2)}</label>
       <input
+        id="okdoci"
         value={w}
         style={{ width: "100px" }}
         type="number"
@@ -49,4 +56,3 @@ function App() {
     </div>
   );
 }
-export default App;

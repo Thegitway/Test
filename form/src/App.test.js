@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { App } from "./App";
+import { render, screen } from "@testing-library/react";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("App", () => {
+  test("Should render without crash", async () => {
+    render(<App />);
+    console.log("OOL =>");
+    const value = screen.getByRole("input");
+    expect(value.textContent).toBe(268);
+  });
 });
